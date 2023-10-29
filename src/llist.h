@@ -51,19 +51,24 @@ public:
     void Insert(llnode<T>* x) {
         // Inserta el nodo x en la lista. 
         x->next = nil->next; 
+        x->prev = nil; 
         nil->next->prev = x; 
         nil->next = x; 
-        x->prev = nil; 
     };
+
 
     llnode<T>* Search(const T& k) {
         // Busca la llave iterativamente. Si la encuentra, devuelve un apuntador al nodo que la contiene; sino devuelve el nodo nil (el centinela).
+        nil->key = k;
         llnode<T>* x = nil->next; 
-        while (x != nil && x->key != k){
+        while (x->key != k){
             x = x->next; 
         } 
-        
-        return x; 
+        if(x == nil){
+            return nil;
+        }else{
+            return x; 
+        }
     };
         
     void Delete(llnode<T>* x) {
