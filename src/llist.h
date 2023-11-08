@@ -46,14 +46,18 @@ public:
         }
         
         delete nil; 
+
+        //std::cout<< "Test" << std::endl;
     };
     
     void Insert(llnode<T>* x) {
         // Inserta el nodo x en la lista. 
         x->next = nil->next; 
         x->prev = nil; 
-        nil->next->prev = x; 
-        nil->next = x; 
+        if(nil->next != nil){
+            nil->next->prev = x; 
+        }
+        nil->next = x;  
     };
 
 

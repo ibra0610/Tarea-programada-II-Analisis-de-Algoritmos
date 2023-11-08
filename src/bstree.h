@@ -151,6 +151,9 @@ public:
         delete z; 
     };   
 
+    void insertarSecuenciales(int n){
+        root = construirBalanceadoAux(0, n-1); 
+    }
 private: 
 //METODOS AUXILIARES
     void clear(bstnode<T>* x){
@@ -160,17 +163,6 @@ private:
             delete x; 
         }
     } 
-
-    // void insertarNodo(bstnode<T>* &x, bstnode<T>* z){
-    //     if(x == nullptr){
-    //         x = z; 
-    //     }else if (z->key < x->key){
-    //         insertarNodo(x->left, z); 
-    //     }else{
-    //         insertarNodo(x->right, z); 
-    //     }
-        
-    // } 
 
     void transplant(bstnode<T>* u, bstnode<T>* v){
         if (u->p == nullptr){ 
@@ -183,6 +175,20 @@ private:
         if(v != nullptr){
             v->p = u->p; 
         }
+    } 
+
+    bstnode<int>* construirBalanceadoAux(int inicio, int final){
+        if(inicio > final){
+            return nullptr;
+        } 
+
+        int mediana = (inicio + final) / 2; 
+        bstnode<int>* nuevoNodo = new bstnode<int>(mediana); 
+
+        nuevoNodo->left = construirBalanceadoAux(inicio, mediana - 1); 
+        nuevoNodo->right = construirBalanceadoAux(mediana + 1, final); 
+
+        return nuevoNodo; 
     }
 };
 
