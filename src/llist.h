@@ -63,16 +63,12 @@ public:
 
     llnode<T>* Search(const T& k) {
         // Busca la llave iterativamente. Si la encuentra, devuelve un apuntador al nodo que la contiene; sino devuelve el nodo nil (el centinela).
-        nil->key = k;
-        llnode<T>* x = nil->next; 
-        while (x->key != k){
-            x = x->next; 
-        } 
-        if(x == nil){
-            return nil;
-        }else{
-            return x; 
-        }
+        llnode<T> *x = nil->next;
+		while((x!=nil)&&(x->key!=k)){
+			x = x->next;
+		}		
+		return x;
+        
     };
         
     void Delete(llnode<T>* x) {
