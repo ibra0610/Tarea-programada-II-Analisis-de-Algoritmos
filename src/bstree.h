@@ -151,9 +151,16 @@ public:
         delete z; 
     };   
 
-    void insertarSecuenciales(int n){
-        root = construirBalanceadoAux(0, n-1); 
-    }
+    // void InsertarEnOrden(bstnode<T>* nodo, int n){
+    //     if((nodo->right = nullptr) && (n>10)){
+    //         bstnode<int>* newNode = new bstnode<int>(n); 
+    //         nodo->right = newNode; 
+    //         InsertarEnOrden(newNode, n+1); 
+    //     }else{
+    //         return; 
+    //     }
+    // } 
+    
 private: 
 //METODOS AUXILIARES
     void clear(bstnode<T>* x){
@@ -163,6 +170,8 @@ private:
             delete x; 
         }
     } 
+
+
 
     void transplant(bstnode<T>* u, bstnode<T>* v){
         if (u->p == nullptr){ 
@@ -177,19 +186,6 @@ private:
         }
     } 
 
-    bstnode<int>* construirBalanceadoAux(int inicio, int final){
-        if(inicio > final){
-            return nullptr;
-        } 
-
-        int mediana = (inicio + final) / 2; 
-        bstnode<int>* nuevoNodo = new bstnode<int>(mediana); 
-
-        nuevoNodo->left = construirBalanceadoAux(inicio, mediana - 1); 
-        nuevoNodo->right = construirBalanceadoAux(mediana + 1, final); 
-
-        return nuevoNodo; 
-    }
 };
 
 #endif /* bstree_h */

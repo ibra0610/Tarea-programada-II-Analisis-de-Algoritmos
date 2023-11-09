@@ -29,11 +29,22 @@ void llenarListaSecuencial(llist<int>& lList, int n){
     }
 }
 
+void llenarArbolAleatorio(bstree<int>& bStree, int n){ 
+    std::random_device rd; 
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 2*n); 
+    for(int index = 0; index < n; ++index){
+        int num = dist(mt); 
+        bstnode<int>* newNode = new bstnode<int>(num); 
+        bStree.Insert(newNode); 
+    }
+}
+
 int main(){
 
-    llist<int> myList;
+    // llist<int> myList;
 
-    srand(static_cast<unsigned>(time(nullptr))); 
+    // srand(static_cast<unsigned>(time(nullptr))); 
 
       const int n = 1000000; 
 
@@ -47,7 +58,7 @@ int main(){
 
 
 
-//     //Medir el tiempo transcurrido en segundos para aleatoria
+//     //Medir el tiempo transcurrido en segundos para la lista
     //     auto start = std::chrono::steady_clock::now(); 
     //     auto end = std::chrono::steady_clock::now(); 
     //     int busquedas = 0;  
@@ -64,45 +75,38 @@ int main(){
 
     // std::cout << "Se realizaron " << busquedas << " busquedas en la lista en un segundo." << std::endl; 
 
-    llnode<int>* nodo1 = new llnode<int>(1); 
-    llnode<int>* nodo2 = new llnode<int>(2); 
-    llnode<int>* nodo3 = new llnode<int>(3); 
-    llnode<int>* nodo4 = new llnode<int>(4); 
 
-    int buscar = 3; 
-    llnode<int>* result = myList.Search(buscar);
-    if (result != myList.nil) {
-        std::cout << "Elemento " << buscar << " encontrado en la lista." << std::endl;
-    } else {
-        std::cout << "Elemento " << buscar << " no encontrado en la lista." << std::endl;
-    }
-    // bstree<int> tree; 
-    // //Insertar nodos aleatorios
-    //  for(int i = 0; i < n; i++){ 
-    //    int randomKey = generateRandomKey(); 
-    //    bstnode<int>* newNode = new bstnode<int>(randomKey); 
-    //    tree.Insert(newNode); 
-    // }    
+    bstree<int> tree; 
+    // //Insertar nodos aleatorios  
+    //llenarArbolAleatorio(tree, n);
 
-    // //Insertar nodos secuenciales PREGUNTAR SI TIENE QUE ESTAR DESBALANCEADO A PROPOSITO
-    // //tree.insertarSecuenciales(n); 
-
-    //     //Medir el tiempo transcurrido en segundos para aleatoria
-    // auto start = std::chrono::steady_clock::now(); 
-    // auto end = std::chrono::steady_clock::now(); 
-    // int busquedas = 0;  
+    // //Insertar nodos secuenciales
+    tree.InsertarEnOrden(tree.root, 0); 
+    //Medir el tiempo transcurrido en segundos
+    auto start = std::chrono::steady_clock::now(); 
+    auto end = std::chrono::steady_clock::now(); 
+    int busquedas = 0;  
 
 
-    // //Busqueda en lista aleatoria
-    // int randomSearchKey = generateRandomKey(); 
-    // while(std::chrono::duration_cast<std::chrono::seconds>(end - start).count() < 1){
-    //     randomSearchKey = generateRandomKey(); 
-    //     bstnode<int>* result = tree.Search(tree.root, randomSearchKey);
-    //     busquedas++; 
-    //     end = std::chrono::steady_clock::now(); 
-    // } 
+    //Busqueda en arbol
+    int randomSearchKey = generateRandomKey(); 
+    while(std::chrono::duration_cast<std::chrono::seconds>(end - start).count() < 1){
+        randomSearchKey = generateRandomKey(); 
+        bstnode<int>* result = tree.Search(tree.root, randomSearchKey);
+        busquedas++; 
+        end = std::chrono::steady_clock::now(); 
+    } 
 
-    // std::cout << "Se realizaron " << busquedas << " busquedas en el arbol binario en un segundo." << std::endl; 
+    std::cout << "Se realizaron " << busquedas << " busquedas en el arbol binario en un segundo." << std::endl;  
+
+
+    // int buscarArbol = 5; 
+    // bstnode<int>* busquedaArbol = tree.Search(tree.root, buscarArbol); 
+    // if(busquedaArbol==nullptr){
+    //     std::cout << "No se encontro " << buscarArbol << " en el arbol." << std::endl;  
+    // }else{
+    //     std::cout << "Se encontro " << buscarArbol << " en el arbol." << std::endl;  
+    // }
 
     return 0; 
 }
