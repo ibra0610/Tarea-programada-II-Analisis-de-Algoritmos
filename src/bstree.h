@@ -151,16 +151,19 @@ public:
         delete z; 
     };   
 
-    // void InsertarEnOrden(bstnode<T>* nodo, int n){
-    //     if((nodo->right = nullptr) && (n>10)){
-    //         bstnode<int>* newNode = new bstnode<int>(n); 
-    //         nodo->right = newNode; 
-    //         InsertarEnOrden(newNode, n+1); 
-    //     }else{
-    //         return; 
-    //     }
-    // } 
-    
+    void InserteDerecha(bstnode<T>* newNode){
+        if(!root){
+            root = newNode; 
+        }else{
+            bstnode<T>* nodo = root; 
+            while(nodo->right){
+                nodo = nodo->right; 
+            } 
+            nodo->right = newNode; 
+        }
+    } 
+
+
 private: 
 //METODOS AUXILIARES
     void clear(bstnode<T>* x){
@@ -170,8 +173,6 @@ private:
             delete x; 
         }
     } 
-
-
 
     void transplant(bstnode<T>* u, bstnode<T>* v){
         if (u->p == nullptr){ 

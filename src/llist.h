@@ -72,13 +72,6 @@ public:
     };
         
     void Delete(llnode<T>* x) {
-        // Saca de la lista la llave contenida en el nodo apuntado por x.
-        // if(x != nil){ 
-        //     x->prev->next = x->next; 
-        //     x->next->prev = x->prev; 
-        //     delete x; 
-        // } 
-
         if (x->prev != nil){
             x->prev->next = x->next; 
         }else{
