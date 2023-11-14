@@ -1,6 +1,7 @@
 #include <iostream> 
 #include "llist.h" 
 #include "bstree.h"
+#include "rbtree.h"
 #include <cstdlib> 
 #include <ctime>  
 #include <chrono>
@@ -43,7 +44,25 @@ void llenarArbolAleatorio(bstree<int>& bStree, int n){
 void llenarArbolSecuencial(bstree<int>& bStree, int n){
     for(int i = 0; i < n; i++){ 
         bstnode<int>* newNode = new bstnode<int>(i); 
-        bStree.InserteDerecha(newNode);  
+        bStree.Insert(newNode);  
+    }
+} 
+
+void llenarRBTreeAleatorio(rbtree<int>& RBTree, int n){
+    std::random_device rd; 
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 2*n); 
+    for(int index = 0; index < n; ++index){
+        int num = dist(mt); 
+        rbtnode<int>* newNode = new rbtnode<int>(num); 
+        RBTree.Insert(newNode); 
+    }
+}
+
+void llenarRBTreeSecuencial(rbtree<int>& RBTree, int n){
+    for(int i = 0; i < n; i++){ 
+        rbtnode<int>* newNode = new rbtnode<int>(i); 
+        RBTree.Insert(newNode);  
     }
 }
 
@@ -83,9 +102,9 @@ int main(){
 //     std::cout << "Se realizaron " << busquedas << " busquedas en la lista en un segundo." << std::endl; 
 
 
-    bstree<int> tree; 
+    //bstree<int> tree; 
     //Insertar nodos aleatorios  
-    llenarArbolAleatorio(tree, n);
+    //llenarArbolAleatorio(tree, n);
 
     //Insertar nodos secuenciales
     //llenarArbolSecuencial(tree, n); 
@@ -93,6 +112,31 @@ int main(){
 
 
     //Medir el tiempo transcurrido en segundos
+    // auto start = std::chrono::steady_clock::now(); 
+    // auto end = std::chrono::steady_clock::now(); 
+    // int busquedas = 0;  
+
+
+    //Busqueda en arbol
+    // int randomSearchKey = generateRandomKey(); 
+    // while(std::chrono::duration_cast<std::chrono::seconds>(end - start).count() < 1){
+    //     randomSearchKey = generateRandomKey(); 
+    //     bstnode<int>* result = tree.Search(tree.root, randomSearchKey);
+    //     busquedas++; 
+    //     end = std::chrono::steady_clock::now(); 
+    // } 
+
+    // std::cout << "Se realizaron " << busquedas << " busquedas en el arbol binario en un segundo." << std::endl;  
+
+
+    rbtree<int> arbolRN; 
+
+    //llenar arbol rojinegro aleatorio 
+    //llenarRBTreeAleatorio(arbolRN, n); 
+
+    //llenar arbol rojinegro secuencial 
+    llenarRBTreeSecuencial(arbolRN, n);
+
     auto start = std::chrono::steady_clock::now(); 
     auto end = std::chrono::steady_clock::now(); 
     int busquedas = 0;  
@@ -102,13 +146,21 @@ int main(){
     int randomSearchKey = generateRandomKey(); 
     while(std::chrono::duration_cast<std::chrono::seconds>(end - start).count() < 1){
         randomSearchKey = generateRandomKey(); 
-        bstnode<int>* result = tree.Search(tree.root, randomSearchKey);
+        rbtnode<int>* result = arbolRN.Search(arbolRN.root, randomSearchKey);
         busquedas++; 
         end = std::chrono::steady_clock::now(); 
-    } 
+    }
 
-    std::cout << "Se realizaron " << busquedas << " busquedas en el arbol binario en un segundo." << std::endl;  
+    std::cout << "Se realizaron " << busquedas << " busquedas en el arbol rojinegro en un segundo." << std::endl;   
 
+    //TEST DE BUSQUEDA
+    // int busq = 5; 
+    // rbtnode<int>* testRN = arbolRN.Search(arbolRN.root, busq); 
+    // if(testRN != arbolRN.nil){ 
+    //     std::cout << "Dato " << busq << " encontrado" << std::endl; 
+    // }else{
+    //     std::cout << "Dato " << busq << " no encontrado" << std::endl; 
+    // }
 
     return 0; 
 }
